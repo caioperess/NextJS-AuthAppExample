@@ -3,22 +3,11 @@ import { AuthContext } from "@/contexts/AuthContext";
 import { setupApiClient } from "@/services/api";
 import { withSSRAuth } from "@/utils/withSSRAuth";
 import { GetServerSideProps } from "next";
-import { useContext } from "react";
 
-export default function Dashboard() {
-  const { isAuthenticated, user, signOut } = useContext(AuthContext);
-
+export default function Metrics() {
   return (
     <>
-      <h1>Dashboard: {user?.email}</h1>
-
-      <button type="button" onClick={signOut}>
-        Sign out
-      </button>
-
-      <Can permissions={["metrics.list"]}>
-        <div>Métricas</div>
-      </Can>
+      <h1>Metrics</h1>
     </>
   );
 }
@@ -31,5 +20,9 @@ export const getServerSideProps: GetServerSideProps = withSSRAuth(
     return {
       props: {},
     };
+  },
+  {
+    permissions: ["metrics.list"],
+    roles: ["administrator"],
   }
 );
